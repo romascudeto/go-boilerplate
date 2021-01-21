@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"go-project/helpers"
 	"go-project/models"
 	"net/http"
 
@@ -15,7 +16,9 @@ func GetEmployee(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
-		c.JSON(http.StatusOK, employee)
+		meta := map[string]interface{}{}
+		response := helpers.NewResponse(meta, employee)
+		c.JSON(http.StatusOK, response)
 	}
 }
 
@@ -40,7 +43,9 @@ func GetEmployeeByID(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
-		c.JSON(http.StatusOK, employee)
+		meta := map[string]interface{}{}
+		response := helpers.NewResponse(meta, employee)
+		c.JSON(http.StatusOK, response)
 	}
 }
 

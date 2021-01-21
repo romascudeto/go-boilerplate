@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	Config "go-project/config"
+	"go-project/middlewares"
 	"go-project/routes"
 
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
 
@@ -18,8 +20,9 @@ func main() {
 	}
 
 	defer Config.DB.Close()
-
-	r := routes.SetupRouter()
+	r := gin.New()
+	r.Use(middlewares.BasicAuth())
+	r = routes.SetupRouter(r)
 
 	r.Run(":8000")
 }
