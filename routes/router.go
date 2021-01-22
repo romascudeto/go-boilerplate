@@ -8,10 +8,14 @@ import (
 
 //SetupRouter ... Configure routes
 func SetupRouter(r *gin.Engine) *gin.Engine {
-	grp1 := r.Group("/employee")
+	grpEmployee := r.Group("/employee")
 	{
-		grp1.GET("", controllers.GetEmployee)
-		grp1.GET("/:id", controllers.GetEmployeeByID)
+		grpEmployee.GET("", controllers.GetEmployee)
+		grpEmployee.GET("/:id", controllers.GetEmployeeByID)
+	}
+	grpRestExternal := r.Group("/external")
+	{
+		grpRestExternal.GET("", controllers.GetExternal)
 	}
 	return r
 }
