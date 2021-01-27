@@ -15,7 +15,13 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 	}
 	grpRestExternal := r.Group("/external")
 	{
-		grpRestExternal.GET("", controllers.GetExternal)
+		grpRestExternal.GET("/example1", controllers.GetExternal1)
+		grpRestExternal.GET("/example2", controllers.GetExternal2)
+	}
+	grpPractice := r.Group("/practice")
+	{
+		grpPractice.GET("/channeling", controllers.Channeling)
+		grpPractice.GET("/channeling2", controllers.Channeling2)
 	}
 	return r
 }

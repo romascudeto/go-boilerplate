@@ -9,8 +9,8 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-//GetExternal ... Get data from external
-func GetExternal(c *gin.Context) {
+//GetExternal1 ... Get data from external
+func GetExternal1(c *gin.Context) {
 	client := resty.New()
 
 	resp, _ := client.R().
@@ -20,5 +20,23 @@ func GetExternal(c *gin.Context) {
 	var restyResponse helpers.Response
 	json.Unmarshal(resp.Body(), &restyResponse)
 	response := helpers.NewResponse(restyResponse.Meta, restyResponse.Data)
+	c.JSON(http.StatusOK, response)
+}
+
+//GetExternal2 ... Get data from external
+func GetExternal2(c *gin.Context) {
+	client := resty.New()
+
+	resp, _ := client.R().
+		EnableTrace().
+		Get("https://jsonplaceholder.typicode.com/todos")
+
+	byt := []byte(resp.Body())
+	var dat interface{}
+	if err := json.Unmarshal(byt, &dat); err != nil {
+		panic(err)
+	}
+	meta := map[string]interface{}{}
+	response := helpers.NewResponse(meta, dat)
 	c.JSON(http.StatusOK, response)
 }
